@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Catalog\AreaController;
+use App\Http\Controllers\Catalog\IssueController;
+use App\Http\Controllers\Ticket\TicketController;
+use App\Http\Controllers\Ticket\CommentController;
+use App\Http\Controllers\Catalog\PriorityController;
+use App\Http\Controllers\Ticket\AttachmentController;
+use App\Http\Controllers\Catalog\UserStatusController;
+use App\Http\Controllers\Ticket\ReplyCommentController;
+use App\Http\Controllers\Ticket\TicketStatusController;
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::post('me', [AuthController::class, 'me']);
+    Route::post('logout', [AuthController::class, 'logout']);
+
+    Route::apiResource('areas', AreaController::class);
+    Route::apiResource('issues', IssueController::class);
+
+    Route::get('filter-tickets', [TicketController::class, 'filterTickets']);
+    Route::apiResource('tickets', TicketController::class);
+    Route::apiResource('attachments', AttachmentController::class)->except(['update']);
+    Route::apiResource('comments', CommentController::class)->except(['update']);
+    Route::apiResource('reply-comments', ReplyCommentController::class)->except(['show', 'update']);
+
+    Route::get('priorities', [PriorityController::class, 'index']);
+    Route::get('user-status', [UserStatusController::class, 'index']);
+    Route::get('ticket-status', [TicketStatusController::class, 'index']);
+});
+
+
+Route::post('sign-up', [AuthController::class, 'signUp']);
+Route::post('sign-in', [AuthController::class, 'signIn']);
+Route::post('verify-email', [AuthController::class, 'verifyEmail']);
