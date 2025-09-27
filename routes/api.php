@@ -10,11 +10,12 @@ use App\Http\Controllers\Ticket\TicketController;
 use App\Http\Controllers\Ticket\CommentController;
 use App\Http\Controllers\Catalog\PriorityController;
 use App\Http\Controllers\Ticket\AttachmentController;
+use App\Http\Controllers\Authorization\RoleController;
 use App\Http\Controllers\Catalog\UserStatusController;
 use App\Http\Controllers\Ticket\ReplyCommentController;
 use App\Http\Controllers\Ticket\TicketStatusController;
+use App\Http\Controllers\Authorization\UserRoleController;
 use App\Http\Controllers\Authorization\PermissionController;
-use App\Http\Controllers\Authorization\RoleController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -28,6 +29,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UserController::class)->except(['store']);
     Route::get('permissions', [PermissionController::class, 'index']);
     Route::apiResource('roles', RoleController::class)->except(['show', 'destroy']);
+    Route::post('assign-role/{user}', [UserRoleController::class, 'assignRole']);
+    Route::post('sync-roles/{user}', [UserRoleController::class, 'syncRoles']);
     Route::apiResource('areas', AreaController::class);
     Route::apiResource('issues', IssueController::class);
 
