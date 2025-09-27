@@ -23,6 +23,8 @@ class UserResource extends JsonResource
             'user_status' => $this->userStatus,
             'created_at' => $this->created_at,
             'email_verified_at' => $this->email_verified_at,
+            'roles' => $this->getRoleNames(),
+            'permissions' => $this->getAllPermissions()->pluck('name'),
         ];
     }
 }

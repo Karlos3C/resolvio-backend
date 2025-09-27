@@ -10,11 +10,10 @@ use App\Http\Requests\Authorization\SyncRoleRequest;
 
 class UserRoleController extends Controller
 {
-    public function assignRole(AssignRoleRequest $request)
+    public function assignRole(AssignRoleRequest $request, User $user)
     {
         try {
             $data = $request->validated();
-            $user = User::findOrFail($data['user_id']);
             $user->assignRole($data['role_name']);
             return response(['message' => 'Rol asignado al usuario exitosamente'], 200);
         } catch (\Throwable $th) {

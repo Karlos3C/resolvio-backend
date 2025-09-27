@@ -22,7 +22,6 @@ class AssignRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "user_id" => 'required|integer|exists:users,id',
             "role_name" => 'required|string|exists:roles,name',
         ];
     }
@@ -30,9 +29,6 @@ class AssignRoleRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_id.required' => 'El id del usuario es obligatorio.',
-            'user_id.integer' => 'El id del usuario debe ser un número entero.',
-            'user_id.exists' => 'El usuario especificado no existe.',
             'role_name.required' => 'El nombre del rol es obligatorio.',
             'role_name.string' => 'El formato del nombre del rol es inválido.',
             'role_name.exists' => 'El rol especificado no existe.',

@@ -13,6 +13,7 @@ class RoleService
         DB::transaction(function () use ($data) {
             $role = Role::create([
                 'name' => $data['name'],
+                'guard_name' => 'web'
             ]);
 
             $role->syncPermissions($data['permissions']);
