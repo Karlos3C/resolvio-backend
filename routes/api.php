@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Catalog\AreaController;
 use App\Http\Controllers\Catalog\IssueController;
 use App\Http\Controllers\Ticket\TicketController;
@@ -12,6 +13,8 @@ use App\Http\Controllers\Ticket\AttachmentController;
 use App\Http\Controllers\Catalog\UserStatusController;
 use App\Http\Controllers\Ticket\ReplyCommentController;
 use App\Http\Controllers\Ticket\TicketStatusController;
+use App\Http\Controllers\Authorization\PermissionController;
+use App\Http\Controllers\Authorization\RoleController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -21,6 +24,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('me', [AuthController::class, 'me']);
     Route::post('logout', [AuthController::class, 'logout']);
 
+    Route::put('update-user-status/{user}', [UserController::class, 'updateUserStatus']);
+    Route::apiResource('users', UserController::class)->except(['store']);
+    Route::get('permissions', [PermissionController::class, 'index']);
+    Route::apiResource('roles', RoleController::class)->except(['show', 'destroy']);
     Route::apiResource('areas', AreaController::class);
     Route::apiResource('issues', IssueController::class);
 
