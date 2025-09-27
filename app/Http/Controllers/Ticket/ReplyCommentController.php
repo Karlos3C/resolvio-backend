@@ -16,7 +16,7 @@ class ReplyCommentController extends Controller
     public function index(Request $request)
     {
         $comment_id = $request->query('comment');
-        $reply_comments = ReplyComment::where('comment_id', $comment_id)->with('user')->get();
+        $reply_comments = ReplyComment::where('comment_id', $comment_id)->get();
         return new ReplyCommentCollection($reply_comments);
     }
 
