@@ -13,7 +13,7 @@ class AttachmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->hasPermissionTo('view attachments');
     }
 
     /**
@@ -21,7 +21,7 @@ class AttachmentPolicy
      */
     public function view(User $user, Attachment $attachment): bool
     {
-        return false;
+        return $user->hasPermissionTo('view attachments');
     }
 
     /**
@@ -29,7 +29,7 @@ class AttachmentPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->hasPermissionTo('create attachments');
     }
 
     /**
@@ -45,7 +45,7 @@ class AttachmentPolicy
      */
     public function delete(User $user, Attachment $attachment): bool
     {
-        return false;
+        return $user->hasPermissionTo('delete attachments') || $user->id === $attachment->user_id;
     }
 
     /**

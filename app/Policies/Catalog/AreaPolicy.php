@@ -1,27 +1,27 @@
 <?php
 
-namespace App\Policies\Authorization;
+namespace App\Policies\Catalog;
 
 use App\Models\User;
-use Spatie\Permission\Models\Role;
+use App\Models\Catalog\Area;
 use Illuminate\Auth\Access\Response;
 
-class RolePolicy
+class AreaPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('view roles');
+        return $user->hasPermissionTo('view areas');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Role $role): bool
+    public function view(User $user, Area $area): bool
     {
-        return $user->hasPermissionTo('view roles');
+        return $user->hasPermissionTo('view areas');
     }
 
     /**
@@ -29,29 +29,29 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('create roles');
+        return $user->hasPermissionTo('create areas');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Role $role): bool
+    public function update(User $user, Area $area): bool
     {
-        return $user->hasPermissionTo('edit roles');
+        return $user->hasPermissionTo('edit areas');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Role $role): bool
+    public function delete(User $user, Area $area): bool
     {
-        return $user->hasPermissionTo('delete roles');
+        return $user->hasPermissionTo('delete areas');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Role $role): bool
+    public function restore(User $user, Area $area): bool
     {
         return false;
     }
@@ -59,7 +59,7 @@ class RolePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Role $role): bool
+    public function forceDelete(User $user, Area $area): bool
     {
         return false;
     }

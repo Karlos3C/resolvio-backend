@@ -13,7 +13,7 @@ class TicketStatusPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->hasPermissionTo('view ticket status');
     }
 
     /**

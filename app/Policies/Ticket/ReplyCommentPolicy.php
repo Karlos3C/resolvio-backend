@@ -13,7 +13,7 @@ class ReplyCommentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->hasPermissionTo('view replies');
     }
 
     /**
@@ -21,7 +21,7 @@ class ReplyCommentPolicy
      */
     public function view(User $user, ReplyComment $replyComment): bool
     {
-        return false;
+        return $user->hasPermissionTo('view replies');
     }
 
     /**
@@ -29,7 +29,7 @@ class ReplyCommentPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->hasPermissionTo('create replies');
     }
 
     /**
@@ -45,7 +45,7 @@ class ReplyCommentPolicy
      */
     public function delete(User $user, ReplyComment $replyComment): bool
     {
-        return false;
+        return $user->hasPermissionTo('delete replies') || $user->id === $replyComment->user_id;
     }
 
     /**

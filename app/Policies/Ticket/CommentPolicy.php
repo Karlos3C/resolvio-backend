@@ -13,7 +13,7 @@ class CommentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->hasPermissionTo('view comments');
     }
 
     /**
@@ -21,7 +21,7 @@ class CommentPolicy
      */
     public function view(User $user, Comment $comment): bool
     {
-        return false;
+        return $user->hasPermissionTo('view comments');
     }
 
     /**
@@ -29,7 +29,7 @@ class CommentPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->hasPermissionTo('create comments');
     }
 
     /**
@@ -45,7 +45,7 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment): bool
     {
-        return false;
+        return $user->hasPermissionTo('delete comments') || $user->id === $comment->user_id;
     }
 
     /**
