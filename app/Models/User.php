@@ -22,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
+    protected $guard_name = 'sanctum';
     /**
      * The attributes that are mass assignable.
      *

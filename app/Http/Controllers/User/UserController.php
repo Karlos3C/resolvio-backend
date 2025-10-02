@@ -9,22 +9,28 @@ use App\Http\Requests\User\AdminUpdateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class UserController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
+        $this->authorize('viewAny', User::class);
         $users = User::orderBy('created_at', 'desc')->paginate(10);
         return new UserCollection($users);
     }
 
     public function show(User $user)
     {
+        $this->authorize('view', $user);
         return new UserResource($user);
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
+        $this->authorize('update', $user);
         try {
             $user->update($request->validated());
             return new UserResource($user);
@@ -38,6 +44,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
         try {
             $user->delete();
             return response([
@@ -53,6 +60,7 @@ class UserController extends Controller
 
     public function updateUserStatus(AdminUpdateUserRequest $request, User $user)
     {
+        $this->authorize('updateUserStatus', $user);
         try {
             $user->update($request->validated());
             return new UserResource($user);
