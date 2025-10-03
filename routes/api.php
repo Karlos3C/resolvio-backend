@@ -45,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('ticket-status', [TicketStatusController::class, 'index']);
 });
 
-
+Route::get('sign-up-areas', [AreaController::class, 'index']);
 Route::post('sign-up', [AuthController::class, 'signUp']);
 Route::post('sign-in', [AuthController::class, 'signIn']);
 Route::post('verify-email', [AuthController::class, 'verifyEmail']);
