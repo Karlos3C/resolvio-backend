@@ -48,4 +48,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('sign-up-areas', [AreaController::class, 'index']);
 Route::post('sign-up', [AuthController::class, 'signUp']);
 Route::post('sign-in', [AuthController::class, 'signIn']);
+Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('reset-password', [AuthController::class, 'resetPassword']);
 Route::post('verify-email', [AuthController::class, 'verifyEmail']);

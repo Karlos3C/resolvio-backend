@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+use App\Services\Auth\AuthService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\SignInRequest;
 use App\Http\Requests\Auth\SignUpRequest;
-use App\Http\Requests\Auth\ValidateUserRequest;
 use App\Http\Requests\Auth\VerifyEmailRequest;
-use App\Services\Auth\AuthService;
-use Illuminate\Http\Request;
+use App\Http\Requests\Auth\ValidateUserRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
 
 class AuthController extends Controller
 {
@@ -34,7 +35,40 @@ class AuthController extends Controller
     {
         try {
             $data = $this->auth_service->signInUser($request->validated());
-            return response($data);
+            return response([
+                'message' => 'Sesión iniciada con exito',
+                'data' => $data
+            ]);
+        } catch (\Throwable $th) {
+            return response([
+                'message' => 'Error al iniciar sesión',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function forgotPassword(ForgotPasswordRequest $request)
+    {
+        try {
+            $this->auth_service->forgotPassword($request->validated());
+            return response([
+                'message' => 'Revise su email, le hemos enviado un correo con instrucciones',
+            ]);
+        } catch (\Throwable $th) {
+            return response([
+                'message' => 'Error al iniciar sesión',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        try {
+            $this->auth_service->resetPassword($request->validated());
+            return response([
+                'message' => 'Contraseña actualizada correctamente. Por favor inicie sesión con sus nuevas credenciales',
+            ]);
         } catch (\Throwable $th) {
             return response([
                 'message' => 'Error al iniciar sesión',
